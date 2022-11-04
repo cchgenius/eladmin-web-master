@@ -14,7 +14,7 @@
         <el-input v-model="query.email" clearable placeholder="邮箱" style="width: 185px;" class="filter-item"
                   @keyup.enter.native="crud.toQuery"/>
         <label class="el-form-item-label">是否已分组</label>
-        <el-input v-model="query.isGruop" clearable placeholder="是否已分组" style="width: 185px;" class="filter-item"
+        <el-input v-model="query.isGroup" clearable placeholder="是否已分组" style="width: 185px;" class="filter-item"
                   @keyup.enter.native="crud.toQuery"/>
         <rrOperation :crud="crud"/>
       </div>
@@ -70,7 +70,11 @@
         <el-table-column prop="age" label="年龄" show-overflow-tooltip align="center"/>
         <el-table-column prop="phone" label="手机号码" show-overflow-tooltip align="center"/>
         <el-table-column prop="email" label="邮箱" show-overflow-tooltip align="center"/>
-        <el-table-column prop="isGruop" label="是否已分组" show-overflow-tooltip align="center"/>
+        <el-table-column prop="isGroup" label="是否已分组" show-overflow-tooltip align="center">
+          <template slot-scope="scope">
+            {{ dict.label.is_group[scope.row.isGroup] }}
+          </template>
+        </el-table-column>
         <el-table-column prop="gruopId" label="分组名称" show-overflow-tooltip align="center"/>
         <!--        <el-table-column prop="createBy" label="创建者" show-overflow-tooltip align="center"/>
                 <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip align="center"/>
@@ -113,7 +117,7 @@ const defaultForm = {
   age: null,
   phone: null,
   email: null,
-  isGruop: null,
+  isGroup: null,
   createBy: null,
   createTime: null,
   updateBy: null,
@@ -125,7 +129,7 @@ export default {
   name: 'TbStaff',
   components: {pagination, crudOperation, rrOperation, udOperation},
   mixins: [presenter(), header(), form(defaultForm), crud()],
-  dicts: ['gender', 'role_name'],
+  dicts: ['gender', 'role_name', 'is_group'],
   cruds() {
     return CRUD({
       title: '人员',
@@ -166,7 +170,7 @@ export default {
         {key: 'name', display_name: '人员名称'},
         {key: 'phone', display_name: '手机号码'},
         {key: 'email', display_name: '邮箱'},
-        {key: 'isGruop', display_name: '是否已分组'}
+        {key: 'isGroup', display_name: '是否已分组'}
       ]
     }
   },
