@@ -7,15 +7,20 @@
         <label class="el-form-item-label">人员名称</label>
         <el-input v-model="query.name" clearable placeholder="人员名称" style="width: 185px;" class="filter-item"
                   @keyup.enter.native="crud.toQuery"/>
-        <label class="el-form-item-label">手机号码</label>
-        <el-input v-model="query.phone" clearable placeholder="手机号码" style="width: 185px;" class="filter-item"
-                  @keyup.enter.native="crud.toQuery"/>
-        <label class="el-form-item-label">邮箱</label>
-        <el-input v-model="query.email" clearable placeholder="邮箱" style="width: 185px;" class="filter-item"
-                  @keyup.enter.native="crud.toQuery"/>
+        <!--        <label class="el-form-item-label">手机号码</label>-->
+        <!--        <el-input v-model="query.phone" clearable placeholder="手机号码" style="width: 185px;" class="filter-item"-->
+        <!--                  @keyup.enter.native="crud.toQuery"/>-->
+        <!--        <label class="el-form-item-label">邮箱</label>-->
+        <!--        <el-input v-model="query.email" clearable placeholder="邮箱" style="width: 185px;" class="filter-item"-->
+        <!--                  @keyup.enter.native="crud.toQuery"/>-->
         <label class="el-form-item-label">是否已分组</label>
-        <el-input v-model="query.isGroup" clearable placeholder="是否已分组" style="width: 185px;" class="filter-item"
-                  @keyup.enter.native="crud.toQuery"/>
+        <!--        <el-input v-model="query.isGroup" clearable placeholder="是否已分组" style="width: 185px;" class="filter-item"-->
+        <!--                  @keyup.enter.native="crud.toQuery"/>-->
+        <el-select v-model="query.isGroup" clearable placeholder="是否已分组" style="width: 185px;"
+                   class="filter-item" @change="crud.toQuery()">
+          <el-option v-for="item in dict.is_group" :key="item.id" :label="item.label"
+                     :value="item.value"></el-option>
+        </el-select>
         <rrOperation :crud="crud"/>
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
@@ -41,11 +46,10 @@
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="form.email" style="width: 370px;"/>
           </el-form-item>
-          <el-form-item label="角色" prop="roleName">
+          <el-form-item label="角色" prop="roleId">
             <template slot-scope="scope">
-              <el-select v-model="form.roleName">
-                <el-option v-for="item in dict.role_name" :key="item.id" label="item.value">
-                  {{ item.label }}
+              <el-select v-model="form.roleId" placeholder="请选择">
+                <el-option v-for="item in dict.role_name" :key="item.id" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
             </template>
@@ -75,7 +79,7 @@
             {{ dict.label.is_group[scope.row.isGroup] }}
           </template>
         </el-table-column>
-        <el-table-column prop="gruopId" label="分组名称" show-overflow-tooltip align="center"/>
+        <el-table-column prop="groupId" label="分组名称" show-overflow-tooltip align="center"/>
         <!--        <el-table-column prop="createBy" label="创建者" show-overflow-tooltip align="center"/>
                 <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip align="center"/>
                 <el-table-column prop="updateBy" label="更新者" show-overflow-tooltip align="center"/>
@@ -111,7 +115,7 @@ import pagination from '@crud/Pagination'
 
 const defaultForm = {
   staffId: null,
-  gruopId: null,
+  groupId: null,
   name: null,
   gender: null,
   age: null,
@@ -162,7 +166,7 @@ export default {
         email: [
           {required: true, message: '分组名称不能为空', trigger: 'blur'}
         ],
-        roleName: [
+        roleId: [
           {required: true, message: '请选择角色', trigger: 'change'}
         ]
       },

@@ -71,7 +71,7 @@ import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
 const defaultForm = {
-  gruopId: null,
+  groupId: null,
   groupName: null,
   groupWay: null,
   createBy: null,
@@ -88,8 +88,8 @@ export default {
     return CRUD({
       title: '分组表',
       url: 'api/tbGroup',
-      idField: 'gruopId',
-      sort: 'gruopId,desc',
+      idField: 'groupId',
+      sort: 'groupId,desc',
       crudMethod: {...crudTbGroup}
     })
   },
@@ -105,7 +105,7 @@ export default {
           {required: true, message: '分组名称不能为空', trigger: 'blur'}
         ],
         groupWay: [
-          {required: true, message: '分组方式不能为空', trigger: 'blur'}
+          {required: true, message: '分组方式不能为空', trigger: 'change'}
         ]
       },
       queryTypeOptions: [
